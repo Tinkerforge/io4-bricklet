@@ -1,7 +1,3 @@
-// tested with 
-// gcc -lpthread -lrt -o example_interrupt bricklet_io4.c 
-//     ip_connection.c example_interrupt.c
-// on Ubuntu
 
 #include <stdio.h>
 
