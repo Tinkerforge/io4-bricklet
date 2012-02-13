@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Do 25 Aug 2011 13:26:16 CEST
+EESchema Schematic File Version 2  date Fr 10 Feb 2012 16:29:53 CET
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -37,34 +37,46 @@ $Descr A4 11700 8267
 encoding utf-8
 Sheet 1 1
 Title "IO4 Bricklet"
-Date "25 aug 2011"
-Rev "1.0"
+Date "10 feb 2012"
+Rev "1.1"
 Comp "Tinkerforge GmbH"
 Comment1 "Licensed under CERN OHL v.1.1"
 Comment2 "Copyright (©) 2011, B.Nordmeyer <bastian@tinkerforge.com>"
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text Notes 550  7200 0    40   ~ 0
-Copyright Tinkerforge GmbH 2011.\nThis documentation describes Open Hardware and is licensed under the\nCERN OHL v. 1.1.\nYou may redistribute and modify this documentation under the terms of the\nCERN OHL v.1.1. (http://ohwr.org/cernohl). This documentation is distributed\nWITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING OF\nMERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A\nPARTICULAR PURPOSE. Please see the CERN OHL v.1.1 for applicable\nconditions\n
-NoConn ~ 4950 2500
+Wire Wire Line
+	5600 3400 5700 3400
+Wire Wire Line
+	5600 3200 5850 3200
+Wire Wire Line
+	4950 3100 5200 3100
+Wire Wire Line
+	4950 3300 5200 3300
+Connection ~ 6200 3200
+Wire Wire Line
+	6400 3000 6200 3000
+Wire Wire Line
+	6200 3000 6200 3700
+Connection ~ 6200 3500
+Wire Wire Line
+	6200 3300 6400 3300
+Wire Wire Line
+	5850 3400 5850 3300
+Wire Wire Line
+	5850 3400 6400 3400
+Wire Wire Line
+	6400 3100 5850 3100
+Wire Wire Line
+	5850 3100 5850 3200
 Wire Wire Line
 	5100 2400 5100 2700
 Wire Wire Line
 	5100 2700 4950 2700
 Wire Wire Line
-	6750 3400 6750 3350
-Wire Wire Line
-	4950 3400 5250 3400
-Wire Wire Line
-	4950 3200 5250 3200
+	7200 4250 7200 4200
 Wire Wire Line
 	5100 3000 5100 4250
-Connection ~ 5100 3650
-Wire Wire Line
-	5100 3650 4950 3650
-Wire Wire Line
-	4950 3650 4950 3750
 Connection ~ 6100 3950
 Wire Wire Line
 	6150 3950 6100 3950
@@ -97,82 +109,120 @@ Wire Wire Line
 Wire Wire Line
 	6100 3950 6100 4050
 Wire Wire Line
-	4950 4450 4950 4250
-Wire Wire Line
-	4950 3100 5250 3100
-Wire Wire Line
-	4950 3300 5250 3300
-Wire Wire Line
-	6750 3250 6750 3150
+	7200 4100 7200 4000
 Wire Wire Line
 	4950 2600 5200 2600
 Wire Wire Line
 	5200 2600 5200 2750
+Wire Wire Line
+	5700 2900 5700 3100
+Wire Wire Line
+	5700 2900 6400 2900
+Wire Wire Line
+	5700 3400 5700 3600
+Wire Wire Line
+	5700 3600 6400 3600
+Wire Wire Line
+	6200 3500 6400 3500
+Wire Wire Line
+	6200 3200 6400 3200
+Connection ~ 6200 3300
+Wire Wire Line
+	4950 3400 5200 3400
+Wire Wire Line
+	5200 3200 4950 3200
+Wire Wire Line
+	5700 3100 5600 3100
+Wire Wire Line
+	5850 3300 5600 3300
+$Comp
+L R_PACK4 RP1
+U 1 1 4EFC46A3
+P 5400 3450
+F 0 "RP1" H 5400 3900 40  0000 C CNN
+F 1 "100" H 5400 3400 40  0000 C CNN
+F 2 "741X083" H 5400 3450 60  0001 C CNN
+	1    5400 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR6
+U 1 1 4EFC205A
+P 6200 3700
+F 0 "#PWR6" H 6200 3700 30  0001 C CNN
+F 1 "GND" H 6200 3630 30  0001 C CNN
+	1    6200 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L AKL_5_2 J3
+U 1 1 4EFC2031
+P 6600 3350
+F 0 "J3" H 6700 3345 60  0000 C CNN
+F 1 "AKL_5_2" H 6950 3350 60  0000 C CNN
+F 2 "AKL_5_2" H 6600 3350 60  0001 C CNN
+	1    6600 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L AKL_5_2 J4
+U 1 1 4EFC2030
+P 6600 3550
+F 0 "J4" H 6700 3545 60  0000 C CNN
+F 1 "AKL_5_2" H 6950 3550 60  0000 C CNN
+F 2 "AKL_5_2" H 6600 3550 60  0001 C CNN
+	1    6600 3550
+	1    0    0    -1  
+$EndComp
+Text Notes 550  7200 0    40   ~ 0
+Copyright Tinkerforge GmbH 2011.\nThis documentation describes Open Hardware and is licensed under the\nCERN OHL v. 1.1.\nYou may redistribute and modify this documentation under the terms of the\nCERN OHL v.1.1. (http://ohwr.org/cernohl). This documentation is distributed\nWITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING OF\nMERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A\nPARTICULAR PURPOSE. Please see the CERN OHL v.1.1 for applicable\nconditions\n
+NoConn ~ 4950 2500
 $Comp
 L GND #PWR9
 U 1 1 4D00FFDA
-P 6750 3400
-F 0 "#PWR9" H 6750 3400 30  0001 C CNN
-F 1 "GND" H 6750 3330 30  0001 C CNN
-	1    6750 3400
+P 7200 4250
+F 0 "#PWR9" H 7200 4250 30  0001 C CNN
+F 1 "GND" H 7200 4180 30  0001 C CNN
+	1    7200 4250
 	1    0    0    -1  
 $EndComp
 $Comp
 L VCC #PWR8
 U 1 1 4D00FFD7
-P 6750 3150
-F 0 "#PWR8" H 6750 3250 30  0001 C CNN
-F 1 "VCC" H 6750 3250 30  0000 C CNN
-	1    6750 3150
+P 7200 4000
+F 0 "#PWR8" H 7200 4100 30  0001 C CNN
+F 1 "VCC" H 7200 4100 30  0000 C CNN
+	1    7200 4000
 	1    0    0    -1  
 $EndComp
 $Comp
-L AKL_5_2 J3
+L AKL_5_2 J5
 U 1 1 4D00FFD4
-P 6950 3300
-F 0 "J3" H 7050 3295 60  0000 C CNN
-F 1 "AKL_5_2" H 7300 3300 60  0000 C CNN
-F 2 "AKL_5_2" H 6950 3300 60  0001 C CNN
-	1    6950 3300
+P 7400 4150
+F 0 "J5" H 7500 4145 60  0000 C CNN
+F 1 "AKL_5_2" H 7750 4150 60  0000 C CNN
+F 2 "AKL_5_2" H 7400 4150 60  0001 C CNN
+	1    7400 4150
 	1    0    0    1   
 $EndComp
 $Comp
 L AKL_5_2 J2
 U 1 1 4D00FFBF
-P 5450 3350
-F 0 "J2" H 5550 3345 60  0000 C CNN
-F 1 "AKL_5_2" H 5800 3350 60  0000 C CNN
-F 2 "AKL_5_2" H 5450 3350 60  0001 C CNN
-	1    5450 3350
+P 6600 3150
+F 0 "J2" H 6700 3145 60  0000 C CNN
+F 1 "AKL_5_2" H 6950 3150 60  0000 C CNN
+F 2 "AKL_5_2" H 6600 3150 60  0001 C CNN
+	1    6600 3150
 	1    0    0    -1  
 $EndComp
 $Comp
 L AKL_5_2 J1
 U 1 1 4D00FFB7
-P 5450 3150
-F 0 "J1" H 5550 3145 60  0000 C CNN
-F 1 "AKL_5_2" H 5800 3150 60  0000 C CNN
-F 2 "AKL_5_2" H 5450 3150 60  0001 C CNN
-	1    5450 3150
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR3
-U 1 1 4CE29764
-P 4950 4450
-F 0 "#PWR3" H 4950 4450 30  0001 C CNN
-F 1 "GND" H 4950 4380 30  0001 C CNN
-	1    4950 4450
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R1
-U 1 1 4CE2975D
-P 4950 4000
-F 0 "R1" V 5030 4000 50  0000 C CNN
-F 1 "DNP" V 4950 4000 50  0000 C CNN
-F 2 "0603" H 4950 4000 60  0001 C CNN
-	1    4950 4000
+P 6600 2950
+F 0 "J1" H 6700 2945 60  0000 C CNN
+F 1 "AKL_5_2" H 6950 2950 60  0000 C CNN
+F 2 "AKL_5_2" H 6600 2950 60  0001 C CNN
+	1    6600 2950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -244,19 +294,19 @@ SDA
 Text GLabel 5300 2800 2    60   Output ~ 0
 SCL
 $Comp
-L VCC #PWR6
+L VCC #PWR5
 U 1 1 4C5FD35E
 P 6100 3950
-F 0 "#PWR6" H 6100 4050 30  0001 C CNN
+F 0 "#PWR5" H 6100 4050 30  0001 C CNN
 F 1 "VCC" H 6100 4050 30  0000 C CNN
 	1    6100 3950
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR5
+L GND #PWR4
 U 1 1 4C5FD34E
 P 5200 4450
-F 0 "#PWR5" H 5200 4450 30  0001 C CNN
+F 0 "#PWR4" H 5200 4450 30  0001 C CNN
 F 1 "GND" H 5200 4380 30  0001 C CNN
 	1    5200 4450
 	1    0    0    -1  
@@ -281,10 +331,10 @@ F 1 "VCC" H 5100 2500 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR4
+L GND #PWR3
 U 1 1 4C5FCF5E
 P 5200 2750
-F 0 "#PWR4" H 5200 2750 30  0001 C CNN
+F 0 "#PWR3" H 5200 2750 30  0001 C CNN
 F 1 "GND" H 5200 2680 30  0001 C CNN
 	1    5200 2750
 	1    0    0    -1  
