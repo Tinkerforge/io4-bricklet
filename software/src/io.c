@@ -25,6 +25,7 @@
 
 #include "brickletlib/bricklet_entry.h"
 #include "bricklib/utility/mutex.h"
+#include "bricklib/utility/init.h"
 #include "bricklib/bricklet/bricklet_communication.h"
 #include "config.h"
 #include <pio/pio_it.h>
@@ -88,34 +89,38 @@ uint8_t make_value(void) {
 	return value;
 }
 
-void tick(void) {
-	if(BC->counter == 0) {
-		uint8_t interrupt = 0;
-		for(uint8_t i = 0; i < NUM_PINS; i++) {
-			if(BC->interrupt & (1 << i)) {
-				uint32_t value = BC->pins[i]->pio->PIO_PDSR & BC->pins[i]->mask;
-				if(value != BC->last_value[i]) {
-					interrupt |= (1 << i);
-					BC->last_value[i] = value;
+void tick(uint8_t tick_type) {
+	if(tick_type & TICK_TASK_TYPE_CALCULATION) {
+		if(BC->counter != 0) {
+			BC->counter--;
+		}
+	} else if(tick_type & TICK_TASK_TYPE_MESSAGE) {
+		if(BC->counter == 0) {
+			uint8_t interrupt = 0;
+			for(uint8_t i = 0; i < NUM_PINS; i++) {
+				if(BC->interrupt & (1 << i)) {
+					uint32_t value = BC->pins[i]->pio->PIO_PDSR & BC->pins[i]->mask;
+					if(value != BC->last_value[i]) {
+						interrupt |= (1 << i);
+						BC->last_value[i] = value;
+					}
 				}
 			}
-		}
-		if(interrupt != 0) {
-			InterruptSignal is = {
-				BS->stack_id,
-				TYPE_INTERRUPT,
-				sizeof(InterruptSignal),
-				interrupt,
-				make_value()
-			};
+			if(interrupt != 0) {
+				InterruptSignal is = {
+					BS->stack_id,
+					TYPE_INTERRUPT,
+					sizeof(InterruptSignal),
+					interrupt,
+					make_value()
+				};
 
-			BA->send_blocking_with_timeout(&is,
-										   sizeof(InterruptSignal),
-										   *BA->com_current);
-			BC->counter = BC->debounce_period;
+				BA->send_blocking_with_timeout(&is,
+											   sizeof(InterruptSignal),
+											   *BA->com_current);
+				BC->counter = BC->debounce_period;
+			}
 		}
-	} else {
-		BC->counter--;
 	}
 }
 
