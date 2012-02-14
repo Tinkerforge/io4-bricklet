@@ -94,7 +94,9 @@ void tick(uint8_t tick_type) {
 		if(BC->counter != 0) {
 			BC->counter--;
 		}
-	} else if(tick_type & TICK_TASK_TYPE_MESSAGE) {
+	}
+
+	if(tick_type & TICK_TASK_TYPE_MESSAGE) {
 		if(BC->counter == 0) {
 			uint8_t interrupt = 0;
 			for(uint8_t i = 0; i < NUM_PINS; i++) {
