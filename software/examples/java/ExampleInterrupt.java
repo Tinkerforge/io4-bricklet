@@ -11,13 +11,11 @@ public class ExampleInterrupt {
 	public static void main(String args[]) throws Exception {
 		// Create connection to brickd
 		IPConnection ipcon = new IPConnection(host, port); // Can throw IOException
-
 		BrickletIO4 io4 = new BrickletIO4(UID); // Create device object
 
-		// Add device to ip connection
+		// Add device to IP connection
 		ipcon.addDevice(io4); // Can throw IPConnection.TimeoutException
 		// Don't use device before it is added to a connection
-		
 
 		// Enable interrupt on pin 0
 		io4.setInterrupt((short)(1 << 0));
@@ -29,7 +27,7 @@ public class ExampleInterrupt {
 				System.out.println("Value: " + Integer.toBinaryString(valueMask));
 			}
 		});
-		
+
 		System.out.println("Press ctrl+c to exit");
 		ipcon.joinThread();
 	}

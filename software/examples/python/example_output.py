@@ -9,10 +9,10 @@ from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_io4 import IO4
 
 if __name__ == "__main__":
-    ipcon = IPConnection(HOST, PORT) # Create ip connection to brickd
+    ipcon = IPConnection(HOST, PORT) # Create IP connection to brickd
 
     io = IO4(UID) # Create device object
-    ipcon.add_device(io) # Add device to ip connection
+    ipcon.add_device(io) # Add device to IP connection
     # Don't use device before it is added to a connection
 
     # Set pin 1 to output low

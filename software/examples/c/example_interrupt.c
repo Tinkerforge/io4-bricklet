@@ -15,7 +15,7 @@ void cb_interrupt(uint8_t interrupt_mask, uint8_t value_mask) {
 }
 
 int main() {
-	// Create ip connection to brickd
+	// Create IP connection to brickd
 	IPConnection ipcon;
 	if(ipcon_create(&ipcon, HOST, PORT) < 0) {
 		fprintf(stderr, "Could not create connection\n");
@@ -26,7 +26,7 @@ int main() {
 	IO4 io;
 	io4_create(&io, UID); 
 
-	// Add device to ip connection
+	// Add device to IP connection
 	if(ipcon_add_device(&ipcon, &io) < 0) {
 		fprintf(stderr, "Could not connect to Brick\n");
 		exit(1);
@@ -40,5 +40,5 @@ int main() {
 	io4_register_callback(&io, IO4_CALLBACK_INTERRUPT, cb_interrupt);
 
 	printf("Press ctrl+c to close\n");
-	ipcon_join_thread(&ipcon); // Join mainloop of ip connection
+	ipcon_join_thread(&ipcon); // Join mainloop of IP connection
 }

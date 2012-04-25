@@ -10,9 +10,8 @@ class Example
 	{
 		IPConnection ipcon = new IPConnection(HOST, PORT); // Create connection to brickd
 		BrickletIO4 io4 = new BrickletIO4(UID); // Create device object
-		ipcon.AddDevice(io4); // Add device to ip connection
+		ipcon.AddDevice(io4); // Add device to IP connection
 		// Don't use device before it is added to a connection
-
 
 		// Set pin 1 to output low
 		io4.SetConfiguration(1 << 1, 'o', false);
@@ -22,5 +21,5 @@ class Example
 
 		System.Console.WriteLine("Press ctrl+c to exit");
 		ipcon.JoinThread();
-    }
+	}
 }
