@@ -19,7 +19,7 @@ ipcon.add_device io4 # Add device to IP connection
 io4.set_interrupt 1 << 0
 
 # Register callback for interrupts
-io4.register_callback BrickletIO4::CALLBACK_INTERRUPT, do |interrupt_mask, value_mask|
+io4.register_callback(BrickletIO4::CALLBACK_INTERRUPT) do |interrupt_mask, value_mask|
   puts "Interrupt by: #{interrupt_mask.to_s 2}"
   puts "Value: #{value_mask.to_s 2}"
 end
