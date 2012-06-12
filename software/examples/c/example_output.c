@@ -27,12 +27,13 @@ int main() {
 	}
 	// Don't use device before it is added to a connection
 
-    // Set pin 1 to output low
-    io4_set_configuration(&io, 1 << 1, 'o', false);
+	// Set pin 1 to output low
+	io4_set_configuration(&io, 1 << 1, 'o', false);
 
-    // Set pin 2 and 3 to output high
-    io4_set_configuration(&io, (1 << 2) | (1 << 3), 'o', true);
+	// Set pin 2 and 3 to output high
+	io4_set_configuration(&io, (1 << 2) | (1 << 3), 'o', true);
 
-	printf("Press ctrl+c to close\n");
-	ipcon_join_thread(&ipcon); // Join mainloop of IP connection
+	printf("Press key to exit\n");
+	getchar();
+	ipcon_destroy(&ipcon);
 }

@@ -19,7 +19,8 @@ class Example
 		// Set pin 2 and 3 to output high
 		io4.SetConfiguration((1 << 2) | (1 << 3), 'o', true);
 
-		System.Console.WriteLine("Press ctrl+c to exit");
-		ipcon.JoinThread();
+		System.Console.WriteLine("Press key to exit");
+		System.Console.ReadKey();
+		ipcon.Destroy();
 	}
 }

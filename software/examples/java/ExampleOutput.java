@@ -23,7 +23,7 @@ public class ExampleOutput {
 		// Set pin 2 and 3 to output high
 		io4.setConfiguration((short)((1 << 2) | (1 << 3)), 'o', true);
 
-		System.out.println("Press ctrl+c to exit");
-		ipcon.joinThread();
+		System.console().readLine("Press key to exit\n");
+		ipcon.destroy();
 	}
 }
