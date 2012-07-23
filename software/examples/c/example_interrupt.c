@@ -33,11 +33,11 @@ int main() {
 	}
 	// Don't use device before it is added to a connection
 
-	// Enable interrupt on pin 0 
-	io4_set_interrupt(&io, 1 << 0),
-
 	// Register callback for interrupts
 	io4_register_callback(&io, IO4_CALLBACK_INTERRUPT, cb_interrupt);
+
+	// Enable interrupt on pin 0
+	io4_set_interrupt(&io, 1 << 0);
 
 	printf("Press key to exit\n");
 	getchar();

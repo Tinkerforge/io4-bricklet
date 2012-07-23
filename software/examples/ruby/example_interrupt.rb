@@ -15,14 +15,14 @@ io4 = BrickletIO4.new UID # Create device object
 ipcon.add_device io4 # Add device to IP connection
 # Don't use device before it is added to a connection
 
-# Enable interrupt on pin 0  
-io4.set_interrupt 1 << 0
-
 # Register callback for interrupts
 io4.register_callback(BrickletIO4::CALLBACK_INTERRUPT) do |interrupt_mask, value_mask|
   puts "Interrupt by: #{interrupt_mask.to_s 2}"
   puts "Value: #{value_mask.to_s 2}"
 end
+
+# Enable interrupt on pin 0
+io4.set_interrupt 1 << 0
 
 puts 'Press key to exit'
 $stdin.gets

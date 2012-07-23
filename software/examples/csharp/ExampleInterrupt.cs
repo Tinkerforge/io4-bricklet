@@ -23,11 +23,11 @@ class Example
 		ipcon.AddDevice(io4); // Add device to IP connection
 		// Don't use device before it is added to a connection
 
-		// Enable interrupt on pin 0
-		io4.SetInterrupt(1 << 0);
-
 		// Register callback for interrupts
 		io4.RegisterCallback(new BrickletIO4.Interrupt(InterruptCB));
+
+		// Enable interrupt on pin 0
+		io4.SetInterrupt(1 << 0);
 
 		System.Console.WriteLine("Press key to exit");
 		System.Console.ReadKey();

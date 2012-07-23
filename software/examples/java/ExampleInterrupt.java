@@ -17,9 +17,6 @@ public class ExampleInterrupt {
 		ipcon.addDevice(io4); // Can throw IPConnection.TimeoutException
 		// Don't use device before it is added to a connection
 
-		// Enable interrupt on pin 0
-		io4.setInterrupt((short)(1 << 0));
-
 		// Add and implement listener for interrupt (called if pin 0 changes)
 		io4.addListener(new BrickletIO4.InterruptListener() {
 			public void interrupt(short interruptMask, short valueMask) {
@@ -27,6 +24,9 @@ public class ExampleInterrupt {
 				System.out.println("Value: " + Integer.toBinaryString(valueMask));
 			}
 		});
+
+		// Enable interrupt on pin 0
+		io4.setInterrupt((short)(1 << 0));
 
 		System.console().readLine("Press key to exit\n");
 		ipcon.destroy();

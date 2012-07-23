@@ -20,11 +20,11 @@ if __name__ == "__main__":
     ipcon.add_device(io) # Add device to IP connection
     # Don't use device before it is added to a connection
 
-    # Enable interrupt on pin 0  
-    io.set_interrupt(1 << 0)
-
     # Register callback for interrupts
     io.register_callback(io.CALLBACK_INTERRUPT, cb_interrupt)
+
+    # Enable interrupt on pin 0
+    io.set_interrupt(1 << 0)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.destroy()
