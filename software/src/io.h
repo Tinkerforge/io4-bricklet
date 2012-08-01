@@ -1,4 +1,5 @@
 /* io4-bricklet
+ * Copyright (C) 2012 Matthias Bolte <matthias@tinkerforge.com>
  * Copyright (C) 2011 Olaf Lüke <olaf@tinkerforge.com>
  *
  * io.h: Implementation of IO-4 Bricklet messages
@@ -33,8 +34,11 @@
 #define TYPE_SET_INTERRUPT 7
 #define TYPE_GET_INTERRUPT 8
 #define TYPE_INTERRUPT 9
+#define TYPE_SET_MONOFLOP 10
+#define TYPE_GET_MONOFLOP 11
+#define TYPE_MONOFLOP_DONE 12
 
-#define NUM_MESSAGES 8
+#define NUM_MESSAGES 11
 
 typedef struct {
 	uint8_t stack_id;
@@ -131,6 +135,39 @@ typedef struct {
 	uint8_t stack_id;
 	uint8_t type;
 	uint16_t length;
+	uint8_t pin_mask;
+	uint8_t value_mask;
+	uint32_t time;
+} __attribute__((__packed__)) SetMonoflop;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	uint8_t pin;
+} __attribute__((__packed__)) GetMonoflop;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	uint8_t value;
+	uint32_t time;
+	uint32_t time_remaining;
+} __attribute__((__packed__)) GetMonoflopReturn;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	uint8_t pin_mask;
+	uint8_t value_mask;
+} __attribute__((__packed__)) MonoflopDone;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
 } __attribute__((__packed__)) StandardMessage;
 
 void get_value(uint8_t com, const GetValue *data);
@@ -141,6 +178,8 @@ void set_debounce_period(uint8_t com, const SetDebouncePeriod *data);
 void get_debounce_period(uint8_t com, const GetDebouncePeriod *data);
 void set_interrupt(uint8_t com, const SetInterrupt *data);
 void get_interrupt(uint8_t com, const GetInterrupt *data);
+void set_monoflop(uint8_t com, SetMonoflop *data);
+void get_monoflop(uint8_t com, GetMonoflop *data);
 
 void invocation(uint8_t com, uint8_t *data);
 void constructor(void);

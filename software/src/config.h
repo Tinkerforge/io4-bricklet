@@ -1,4 +1,5 @@
 /* io4-bricklet
+ * Copyright (C) 2012 Matthias Bolte <matthias@tinkerforge.com>
  * Copyright (C) 2011 Olaf Lüke <olaf@tinkerforge.com>
  *
  * config.h: IO-4 Bricklet specific configuration
@@ -34,7 +35,7 @@
 #define BRICKLET_HARDWARE_NAME "IO-4 Bricklet 1.0"
 #define BRICKLET_FIRMWARE_VERSION_MAJOR 1
 #define BRICKLET_FIRMWARE_VERSION_MINOR 1
-#define BRICKLET_FIRMWARE_VERSION_REVISION 0
+#define BRICKLET_FIRMWARE_VERSION_REVISION 1
 
 #define INVOCATION_IN_BRICKLET_CODE
 #define PIN0 (BS->pin1_ad)
@@ -42,9 +43,14 @@
 #define PIN2 (BS->pin3_pwm)
 #define PIN3 (BS->pin4_io)
 
+#define NUM_PINS 4
+
 typedef struct {
-	Pin *pins[4];
-	uint32_t last_value[4];
+	Pin *pins[NUM_PINS];
+	uint32_t last_value[NUM_PINS];
+	uint32_t time[NUM_PINS];
+	uint32_t time_remaining[NUM_PINS];
+	uint8_t monoflop_callback_mask;
 	uint8_t interrupt;
 	uint32_t debounce_period;
 	uint32_t counter;
