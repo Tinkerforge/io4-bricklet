@@ -62,12 +62,15 @@ void constructor(void) {
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
 		BC->pins[i]->type = PIO_INPUT;
 		BC->pins[i]->attribute = PIO_PULLUP;
-		BC->last_value[i] = BC->pins[i]->pio->PIO_PDSR & BC->pins[i]->mask;
 		BC->time[i] = 0;
 		BC->time_remaining[i] = 0;
 	}
 
 	BA->PIO_Configure(*BC->pins, NUM_PINS);
+	for(uint8_t i = 0; i < NUM_PINS; i++) {
+		BC->last_value[i] = BC->pins[i]->pio->PIO_PDSR & BC->pins[i]->mask;
+		__NOP();
+	}
 
 	BC->monoflop_callback_mask = 0;
 	BC->counter = 0;
