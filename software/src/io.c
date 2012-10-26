@@ -69,7 +69,6 @@ void constructor(void) {
 	BA->PIO_Configure(*BC->pins, NUM_PINS);
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
 		BC->last_value[i] = BC->pins[i]->pio->PIO_PDSR & BC->pins[i]->mask;
-		__NOP();
 	}
 
 	BC->monoflop_callback_mask = 0;
