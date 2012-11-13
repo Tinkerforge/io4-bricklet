@@ -1,6 +1,6 @@
 /* io4-bricklet
  * Copyright (C) 2012 Matthias Bolte <matthias@tinkerforge.com>
- * Copyright (C) 2011 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
  *
  * io.c: Implementation of IO-4 Bricklet messages
  *
@@ -26,28 +26,65 @@
 #include "bricklib/utility/mutex.h"
 #include "bricklib/utility/init.h"
 #include "bricklib/bricklet/bricklet_communication.h"
+#include "bricklib/drivers/pio/pio.h"
 #include "config.h"
-#include <pio/pio_it.h>
-#include <pio/pio.h>
 
-const ComMessage com_messages[] = {
-	{TYPE_SET_VALUE, (message_handler_func_t)set_value},
-	{TYPE_GET_VALUE, (message_handler_func_t)get_value},
-	{TYPE_SET_CONFIGURATION, (message_handler_func_t)set_configuration},
-	{TYPE_GET_CONFIGURATION, (message_handler_func_t)get_configuration},
-	{TYPE_SET_DEBOUNCE_PERIOD, (message_handler_func_t)set_debounce_period},
-	{TYPE_GET_DEBOUNCE_PERIOD, (message_handler_func_t)get_debounce_period},
-	{TYPE_SET_INTERRUPT, (message_handler_func_t)set_interrupt},
-	{TYPE_GET_INTERRUPT, (message_handler_func_t)get_interrupt},
-	{TYPE_INTERRUPT, (message_handler_func_t)NULL},
-	{TYPE_SET_MONOFLOP, (message_handler_func_t)set_monoflop},
-	{TYPE_GET_MONOFLOP, (message_handler_func_t)get_monoflop},
-};
+void invocation(const ComType com, const uint8_t *data) {
+	switch(((MessageHeader*)data)->fid) {
+		case FID_SET_VALUE: {
+			set_value(com, (SetValue*)data);
+			break;
+		}
 
-void invocation(uint8_t com, uint8_t *data) {
-	uint8_t id = ((StandardMessage*)data)->type - 1;
-	if(id < NUM_MESSAGES) {
-		BRICKLET_OFFSET(com_messages[id].reply_func)(com, data);
+		case FID_GET_VALUE: {
+			get_value(com, (GetValue*)data);
+			break;
+		}
+
+		case FID_SET_CONFIGURATION: {
+			set_configuration(com, (SetConfiguration*)data);
+			break;
+		}
+
+		case FID_GET_CONFIGURATION: {
+			get_configuration(com, (GetConfiguration*)data);
+			break;
+		}
+
+		case FID_SET_DEBOUNCE_PERIOD: {
+			set_debounce_period(com, (SetDebouncePeriod*)data);
+			break;
+		}
+
+		case FID_GET_DEBOUNCE_PERIOD: {
+			get_debounce_period(com, (GetDebouncePeriod*)data);
+			break;
+		}
+
+		case FID_SET_INTERRUPT: {
+			set_interrupt(com, (SetInterrupt*)data);
+			break;
+		}
+
+		case FID_GET_INTERRUPT: {
+			get_interrupt(com, (GetInterrupt*)data);
+			break;
+		}
+
+		case FID_SET_MONOFLOP: {
+			set_monoflop(com, (SetMonoflop*)data);
+			break;
+		}
+
+		case FID_GET_MONOFLOP: {
+			get_monoflop(com, (GetMonoflop*)data);
+			break;
+		}
+
+		default: {
+			BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_NOT_SUPPORTED, com);
+			break;
+		}
 	}
 }
 
@@ -96,7 +133,7 @@ uint8_t make_value(void) {
 	return value;
 }
 
-void tick(uint8_t tick_type) {
+void tick(const uint8_t tick_type) {
 	if(tick_type & TICK_TASK_TYPE_CALCULATION) {
 		if(BC->counter != 0) {
 			BC->counter--;
@@ -136,13 +173,10 @@ void tick(uint8_t tick_type) {
 				}
 			}
 			if(interrupt != 0) {
-				InterruptSignal is = {
-					BS->stack_id,
-					TYPE_INTERRUPT,
-					sizeof(InterruptSignal),
-					interrupt,
-					make_value()
-				};
+				InterruptSignal is;
+				BA->com_make_default_header(&is, BS->uid, sizeof(InterruptSignal), FID_INTERRUPT);
+				is.interrupt_mask = interrupt;
+				is.value_mask     = make_value();
 
 				BA->send_blocking_with_timeout(&is,
 				                               sizeof(InterruptSignal),
@@ -152,13 +186,11 @@ void tick(uint8_t tick_type) {
 		}
 
 		if(BC->monoflop_callback_mask) {
-			MonoflopDone md = {
-				BS->stack_id,
-				TYPE_MONOFLOP_DONE,
-				sizeof(MonoflopDone),
-				0,
-				0
-			};
+			MonoflopDone md;
+
+			BA->com_make_default_header(&md, BS->uid, sizeof(MonoflopDone), FID_MONOFLOP_DONE);
+			md.pin_mask   = 0;
+			md.value_mask = 0;
 
 			for(uint8_t i = 0; i < NUM_PINS; i++) {
 				if (BC->monoflop_callback_mask & (1 << i)) {
@@ -179,18 +211,17 @@ void tick(uint8_t tick_type) {
 	}
 }
 
-void get_value(uint8_t com, const GetValue *data) {
+void get_value(const ComType com, const GetValue *data) {
 	GetValueReturn gvr;
 
-	gvr.stack_id      = data->stack_id;
-	gvr.type          = data->type;
-	gvr.length        = sizeof(GetValueReturn);
+	gvr.header        = data->header;
+	gvr.header.length = sizeof(GetValueReturn);
 	gvr.value_mask    = make_value();
 
 	BA->send_blocking_with_timeout(&gvr, sizeof(GetValueReturn), com);
 }
 
-void set_value(uint8_t com, const SetValue *data) {
+void set_value(const ComType com, const SetValue *data) {
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
 		if(BC->pins[i]->type != PIO_INPUT) {
 			if(data->value_mask & (1 << i)) {
@@ -203,9 +234,10 @@ void set_value(uint8_t com, const SetValue *data) {
 	}
 
 	BA->PIO_Configure(*BC->pins, NUM_PINS);
+	BA->com_return_setter(com, data);
 }
 
-void set_configuration(uint8_t com, const SetConfiguration *data) {
+void set_configuration(const ComType com, const SetConfiguration *data) {
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
 		if(data->pin_mask & (1 << i)) {
 			if(data->direction == 'i' || data->direction == 'I') {
@@ -229,9 +261,10 @@ void set_configuration(uint8_t com, const SetConfiguration *data) {
 	}
 
 	BA->PIO_Configure(*BC->pins, NUM_PINS);
+	BA->com_return_setter(com, data);
 }
 
-void get_configuration(uint8_t com, const GetConfiguration *data) {
+void get_configuration(const ComType com, const GetConfiguration *data) {
 	uint8_t direction_mask = 0;
 	uint8_t value_mask = 0;
 
@@ -250,46 +283,45 @@ void get_configuration(uint8_t com, const GetConfiguration *data) {
 
 	GetConfigurationReturn gcr;
 
-	gcr.stack_id       = data->stack_id;
-	gcr.type           = data->type;
-	gcr.length         = sizeof(GetConfigurationReturn);
+	gcr.header         = data->header;
+	gcr.header.length  = sizeof(GetConfigurationReturn);
 	gcr.direction_mask = direction_mask;
 	gcr.value_mask     = value_mask;
 
 	BA->send_blocking_with_timeout(&gcr, sizeof(GetConfigurationReturn), com);
 }
 
-void set_debounce_period(uint8_t com, const SetDebouncePeriod *data) {
+void set_debounce_period(const ComType com, const SetDebouncePeriod *data) {
 	BC->debounce_period = data->debounce;
+	BA->com_return_setter(com, data);
 }
 
-void get_debounce_period(uint8_t com, const GetDebouncePeriod *data) {
+void get_debounce_period(const ComType com, const GetDebouncePeriod *data) {
 	GetDebouncePeriodReturn gdpr;
 
-	gdpr.stack_id       = data->stack_id;
-	gdpr.type           = data->type;
-	gdpr.length         = sizeof(GetDebouncePeriodReturn);
+	gdpr.header         = data->header;
+	gdpr.header.length  = sizeof(GetDebouncePeriodReturn);
 	gdpr.debounce       = BC->debounce_period;
 
 	BA->send_blocking_with_timeout(&gdpr, sizeof(GetDebouncePeriodReturn), com);
 }
 
-void set_interrupt(uint8_t com, const SetInterrupt *data) {
+void set_interrupt(const ComType com, const SetInterrupt *data) {
 	BC->interrupt = data->interrupt_mask;
+	BA->com_return_setter(com, data);
 }
 
-void get_interrupt(uint8_t com, const GetInterrupt *data) {
+void get_interrupt(const ComType com, const GetInterrupt *data) {
 	GetInterruptReturn gir;
 
-	gir.stack_id       = data->stack_id;
-	gir.type           = data->type;
-	gir.length         = sizeof(GetInterruptReturn);
+	gir.header         = data->header;
+	gir.header.length  = sizeof(GetInterruptReturn);
 	gir.interrupt_mask = BC->interrupt;
 
 	BA->send_blocking_with_timeout(&gir, sizeof(GetInterruptReturn), com);
 }
 
-void set_monoflop(uint8_t com, SetMonoflop *data) {
+void set_monoflop(const ComType com, const SetMonoflop *data) {
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
 		if((data->pin_mask & (1 << i)) && BC->pins[i]->type != PIO_INPUT) {
 			if(data->value_mask & (1 << i)) {
@@ -304,19 +336,19 @@ void set_monoflop(uint8_t com, SetMonoflop *data) {
 	}
 
 	BA->PIO_Configure(*BC->pins, NUM_PINS);
+	BA->com_return_setter(com, data);
 }
 
-void get_monoflop(uint8_t com, GetMonoflop *data) {
+void get_monoflop(const ComType com, const GetMonoflop *data) {
 	if(data->pin >= NUM_PINS) {
-		// TODO: Error?
+		BA->com_return_error(data, com, MESSAGE_ERROR_CODE_INVALID_PARAMETER, sizeof(MessageHeader));
 		return;
 	}
 
 	GetMonoflopReturn gmr;
 
-	gmr.stack_id       = data->stack_id;
-	gmr.type           = data->type;
-	gmr.length         = sizeof(GetMonoflopReturn);
+	gmr.header         = data->header;
+	gmr.header.length  = sizeof(GetMonoflopReturn);
 	gmr.value          = (BC->pins[data->pin]->pio->PIO_PDSR & BC->pins[data->pin]->mask) ? 1 : 0;
 	gmr.time           = BC->time[data->pin];
 	gmr.time_remaining = BC->time_remaining[data->pin];
