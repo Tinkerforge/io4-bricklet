@@ -10,10 +10,12 @@ HOST = 'localhost'
 PORT = 4223
 UID = '6hY' # Change to your UID
 
-ipcon = IPConnection.new HOST, PORT # Create IP connection to brickd
-io4 = BrickletIO4.new UID # Create device object
-ipcon.add_device io4 # Add device to IP connection
-# Don't use device before it is added to a connection
+ipcon = IPConnection.new # Create IP connection
+io4 = BrickletIO4.new UID, ipcon # Create device object
+
+ipcon.connect HOST, PORT # Connect to brickd
+# Don't use device before ipcon is connected
+
 
 # Set pin 1 to output low
 io4.set_configuration 1 << 1, 'o', false
@@ -23,4 +25,3 @@ io4.set_configuration((1 << 2) | (1 << 3), 'o', true)
 
 puts 'Press key to exit'
 $stdin.gets
-ipcon.destroy

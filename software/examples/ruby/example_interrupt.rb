@@ -10,10 +10,11 @@ HOST = 'localhost'
 PORT = 4223
 UID = '6hY' # Change to your UID
 
-ipcon = IPConnection.new HOST, PORT # Create IP connection to brickd
-io4 = BrickletIO4.new UID # Create device object
-ipcon.add_device io4 # Add device to IP connection
-# Don't use device before it is added to a connection
+ipcon = IPConnection.new # Create IP connection
+io4 = BrickletIO4.new UID, ipcon # Create device object
+
+ipcon.connect HOST, PORT # Connect to brickd
+# Don't use device before ipcon is connected
 
 # Register callback for interrupts
 io4.register_callback(BrickletIO4::CALLBACK_INTERRUPT) do |interrupt_mask, value_mask|
@@ -26,4 +27,3 @@ io4.set_interrupt 1 << 0
 
 puts 'Press key to exit'
 $stdin.gets
-ipcon.destroy
