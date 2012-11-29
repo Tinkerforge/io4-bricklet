@@ -17,11 +17,11 @@ function cb_interrupt($interruptMask, $valueMask)
     echo "Value: " . decbin($valueMask) . "\n";
 }
 
-$ipcon = new IPConnection($host, $port); // Create IP connection to brickd
-$io4 = new BrickletIO4($uid); // Create device object
+$ipcon = new IPConnection(); // Create IP connection
+$io4 = new BrickletIO4($uid, $ipcon); // Create device object
 
-$ipcon->addDevice($io4); // Add device to IP connection
-// Don't use device before it is added to a connection
+$ipcon->connect($host, $port); // Connect to brickd
+// Don't use device before ipcon is connected
 
 // Register callback for interrupts
 $io4->registerCallback(BrickletIO4::CALLBACK_INTERRUPT, 'cb_interrupt');
