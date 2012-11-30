@@ -238,6 +238,12 @@ void set_value(const ComType com, const SetValue *data) {
 }
 
 void set_configuration(const ComType com, const SetConfiguration *data) {
+	if(data->direction != 'i' && data->direction != 'I' &&
+	   data->direction != 'o' && data->direction != 'O') {
+		BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+		return;
+	}
+
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
 		if(data->pin_mask & (1 << i)) {
 			if(data->direction == 'i' || data->direction == 'I') {
@@ -341,7 +347,7 @@ void set_monoflop(const ComType com, const SetMonoflop *data) {
 
 void get_monoflop(const ComType com, const GetMonoflop *data) {
 	if(data->pin >= NUM_PINS) {
-		BA->com_return_error(data, com, MESSAGE_ERROR_CODE_INVALID_PARAMETER, sizeof(MessageHeader));
+		BA->com_return_error(data, sizeof(GetMonoflopReturn), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 		return;
 	}
 
