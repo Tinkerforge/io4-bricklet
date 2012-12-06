@@ -10,6 +10,8 @@
 
 // Callback function for interrupts
 void cb_interrupt(uint8_t interrupt_mask, uint8_t value_mask, void *user_data) {
+	(void)user_data; // avoid unused parameter warning
+
 	printf("Interrupt by: %d\n", interrupt_mask);
 	printf("Value: %d\n", value_mask);
 }
@@ -33,8 +35,8 @@ int main() {
 	// Register callback for interrupts
 	io4_register_callback(&io, 
 	                      IO4_CALLBACK_INTERRUPT, 
-						  cb_interrupt,
-						  NULL);
+	                      cb_interrupt,
+	                      NULL);
 
 	// Enable interrupt on pin 0
 	io4_set_interrupt(&io, 1 << 0);
