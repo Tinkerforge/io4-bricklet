@@ -35,7 +35,7 @@ int main() {
 	// Register callback for interrupts
 	io4_register_callback(&io, 
 	                      IO4_CALLBACK_INTERRUPT, 
-	                      cb_interrupt,
+	                      (void *)cb_interrupt,
 	                      NULL);
 
 	// Enable interrupt on pin 0
