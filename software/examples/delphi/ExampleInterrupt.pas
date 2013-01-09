@@ -12,7 +12,7 @@ type
     ipcon: TIPConnection;
     io: TBrickletIO4;
   public
-    procedure InterruptCB(sender: TObject; const interruptMask: byte; const valueMask: byte);
+    procedure InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
     procedure Execute;
   end;
 
@@ -25,7 +25,7 @@ var
   e: TExample;
 
 { Callback function for interrupts }
-procedure TExample.InterruptCB(sender: TObject; const interruptMask: byte; const valueMask: byte);
+procedure TExample.InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
 begin
   WriteLn(Format('Interrupt by: %d', [interruptMask]));
   WriteLn(Format('Value: %d', [valueMask]));
