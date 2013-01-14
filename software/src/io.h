@@ -1,6 +1,6 @@
 /* io4-bricklet
  * Copyright (C) 2012 Matthias Bolte <matthias@tinkerforge.com>
- * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2013 Olaf Lüke <olaf@tinkerforge.com>
  *
  * io.h: Implementation of IO-4 Bricklet messages
  *
@@ -39,8 +39,7 @@
 #define FID_SET_MONOFLOP 10
 #define FID_GET_MONOFLOP 11
 #define FID_MONOFLOP_DONE 12
-
-#define NUM_MESSAGES 11
+#define FID_SET_SELECTED_VALUES 13
 
 typedef struct {
 	MessageHeader header;
@@ -58,7 +57,7 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
-	uint8_t pin_mask;
+	uint8_t selection_mask;
 	char direction;
 	bool value;
 } __attribute__((__packed__)) SetConfiguration;
@@ -109,7 +108,7 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
-	uint8_t pin_mask;
+	uint8_t selection_mask;
 	uint8_t value_mask;
 	uint32_t time;
 } __attribute__((__packed__)) SetMonoflop;
@@ -128,9 +127,15 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
-	uint8_t pin_mask;
+	uint8_t selection_mask;
 	uint8_t value_mask;
 } __attribute__((__packed__)) MonoflopDone;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t selection_mask;
+	uint8_t value_mask;
+} __attribute__((__packed__)) SetSelectedValues;
 
 typedef struct {
 	MessageHeader header;
@@ -146,6 +151,7 @@ void set_interrupt(const ComType com, const SetInterrupt *data);
 void get_interrupt(const ComType com, const GetInterrupt *data);
 void set_monoflop(const ComType com, const SetMonoflop *data);
 void get_monoflop(const ComType com, const GetMonoflop *data);
+void set_selected_values(const ComType com, const SetSelectedValues *data);
 
 void invocation(const ComType com, const uint8_t *data);
 void constructor(void);

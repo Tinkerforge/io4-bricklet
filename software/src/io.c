@@ -1,6 +1,6 @@
 /* io4-bricklet
  * Copyright (C) 2012 Matthias Bolte <matthias@tinkerforge.com>
- * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2013 Olaf Lüke <olaf@tinkerforge.com>
  *
  * io.c: Implementation of IO-4 Bricklet messages
  *
@@ -78,6 +78,11 @@ void invocation(const ComType com, const uint8_t *data) {
 
 		case FID_GET_MONOFLOP: {
 			get_monoflop(com, (GetMonoflop*)data);
+			break;
+		}
+
+		case FID_SET_SELECTED_VALUES: {
+			set_selected_values(com, (SetSelectedValues*)data);
 			break;
 		}
 
@@ -189,12 +194,12 @@ void tick(const uint8_t tick_type) {
 			MonoflopDone md;
 
 			BA->com_make_default_header(&md, BS->uid, sizeof(MonoflopDone), FID_MONOFLOP_DONE);
-			md.pin_mask   = 0;
-			md.value_mask = 0;
+			md.selection_mask = 0;
+			md.value_mask     = 0;
 
 			for(uint8_t i = 0; i < NUM_PINS; i++) {
 				if (BC->monoflop_callback_mask & (1 << i)) {
-					md.pin_mask |= (1 << i);
+					md.selection_mask |= (1 << i);
 
 					if(BC->pins[i]->pio->PIO_PDSR & BC->pins[i]->mask) {
 						md.value_mask |= (1 << i);
@@ -245,7 +250,7 @@ void set_configuration(const ComType com, const SetConfiguration *data) {
 	}
 
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
-		if(data->pin_mask & (1 << i)) {
+		if(data->selection_mask & (1 << i)) {
 			if(data->direction == 'i' || data->direction == 'I') {
 				BC->pins[i]->type = PIO_INPUT;
 				BC->time_remaining[i] = 0;
@@ -329,7 +334,7 @@ void get_interrupt(const ComType com, const GetInterrupt *data) {
 
 void set_monoflop(const ComType com, const SetMonoflop *data) {
 	for(uint8_t i = 0; i < NUM_PINS; i++) {
-		if((data->pin_mask & (1 << i)) && BC->pins[i]->type != PIO_INPUT) {
+		if((data->selection_mask & (1 << i)) && BC->pins[i]->type != PIO_INPUT) {
 			if(data->value_mask & (1 << i)) {
 				BC->pins[i]->type = PIO_OUTPUT_1;
 			} else {
@@ -360,4 +365,23 @@ void get_monoflop(const ComType com, const GetMonoflop *data) {
 	gmr.time_remaining = BC->time_remaining[data->pin];
 
 	BA->send_blocking_with_timeout(&gmr, sizeof(GetMonoflopReturn), com);
+}
+
+void set_selected_values(const ComType com, const SetSelectedValues *data) {
+	for(uint8_t i = 0; i < NUM_PINS; i++) {
+		if(data->selection_mask & (1 << i)) {
+			if(BC->pins[i]->type != PIO_INPUT) {
+				if(data->value_mask & (1 << i)) {
+					BC->pins[i]->type = PIO_OUTPUT_1;
+				} else {
+					BC->pins[i]->type = PIO_OUTPUT_0;
+				}
+				BC->time_remaining[i] = 0;
+			}
+		}
+	}
+
+	BA->PIO_Configure(*BC->pins, NUM_PINS);
+	BA->com_return_setter(com, data);
+
 }
