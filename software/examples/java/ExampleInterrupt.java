@@ -16,7 +16,7 @@ public class ExampleInterrupt {
 		// Don't use device before ipcon is connected
 
 		// Add and implement listener for interrupt (called if pin 0 changes)
-		io4.addListener(new BrickletIO4.InterruptListener() {
+		io4.addInterruptListener(new BrickletIO4.InterruptListener() {
 			public void interrupt(short interruptMask, short valueMask) {
 				System.out.println("Interrupt by: " + Integer.toBinaryString(interruptMask));
 				System.out.println("Value: " + Integer.toBinaryString(valueMask));
