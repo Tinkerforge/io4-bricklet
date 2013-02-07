@@ -22,3 +22,4 @@ if __name__ == "__main__":
     io.set_configuration((1 << 2) | (1 << 3), 'o', True)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
+    ipcon.disconnect()

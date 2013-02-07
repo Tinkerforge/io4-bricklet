@@ -27,5 +27,6 @@ public class ExampleInterrupt {
 		io4.setInterrupt((short)(1 << 0));
 
 		System.console().readLine("Press key to exit\n");
+		ipcon.disconnect();
 	}
 }

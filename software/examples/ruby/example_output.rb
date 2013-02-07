@@ -25,3 +25,4 @@ io4.set_configuration((1 << 2) | (1 << 3), 'o', true)
 
 puts 'Press key to exit'
 $stdin.gets
+ipcon.disconnect

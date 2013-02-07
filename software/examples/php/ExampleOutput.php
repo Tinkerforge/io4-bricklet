@@ -24,5 +24,6 @@ $io4->setConfiguration((1 << 2) | (1 << 3), 'o', TRUE);
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));
+$ipcon->disconnect();
 
 ?>

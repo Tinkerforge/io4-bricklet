@@ -22,5 +22,6 @@ public class ExampleOutput {
 		io4.setConfiguration((short)((1 << 2) | (1 << 3)), 'o', true);
 
 		System.console().readLine("Press key to exit\n");
+		ipcon.disconnect();
 	}
 }
