@@ -4,10 +4,6 @@
 # change to your UID
 uid=XYZ
 
-# get current illuminance (unit is Lux/10)
-tinkerforge call ambient-light-bricklet $uid get-illuminance
-
-
 # set pin 1 to output low: (1 << 1) = 2
 tinkerforge call io4-bricklet $uid set-configuration 2 output false
 
