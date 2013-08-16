@@ -5,7 +5,7 @@
 uid=XYZ
 
 # set pin 1 to output low: (1 << 1) = 2
-tinkerforge call io4-bricklet $uid set-configuration 2 output false
+tinkerforge call io4-bricklet $uid set-configuration 2 out false
 
 # set pin 2 and 3 to output high: (1 << 2) | (1 << 3) = 12
-tinkerforge call io4-bricklet $uid set-configuration 12 output true
+tinkerforge call io4-bricklet $uid set-configuration 12 out true
