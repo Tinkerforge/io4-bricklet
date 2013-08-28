@@ -1,5 +1,5 @@
 /* io4-bricklet
- * Copyright (C) 2012 Matthias Bolte <matthias@tinkerforge.com>
+ * Copyright (C) 2012-2013 Matthias Bolte <matthias@tinkerforge.com>
  * Copyright (C) 2011-2013 Olaf Lüke <olaf@tinkerforge.com>
  *
  * io.h: Implementation of IO-4 Bricklet messages
@@ -27,6 +27,10 @@
 
 #include "bricklib/com/com_common.h"
 
+#define EDGE_TYPE_RISING  0
+#define EDGE_TYPE_FALLING 1
+#define EDGE_TYPE_BOTH    2
+
 #define FID_SET_VALUE 1
 #define FID_GET_VALUE 2
 #define FID_SET_CONFIGURATION 3
@@ -40,6 +44,9 @@
 #define FID_GET_MONOFLOP 11
 #define FID_MONOFLOP_DONE 12
 #define FID_SET_SELECTED_VALUES 13
+#define FID_GET_EDGE_COUNT 14
+#define FID_SET_EDGE_COUNT_CONFIG 15
+#define FID_GET_EDGE_COUNT_CONFIG 16
 
 typedef struct {
 	MessageHeader header;
@@ -139,6 +146,35 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
+	uint8_t pin;
+	bool reset_counter;
+} __attribute__((__packed__)) GetEdgeCount;
+
+typedef struct {
+	MessageHeader header;
+	uint32_t count;
+} __attribute__((__packed__)) GetEdgeCountReturn;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t selection_mask;
+	uint8_t edge_type;
+	uint8_t debounce;
+} __attribute__((__packed__)) SetEdgeCountConfig;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t pin;
+} __attribute__((__packed__)) GetEdgeCountConfig;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t edge_type;
+	uint8_t debounce;
+} __attribute__((__packed__)) GetEdgeCountConfigReturn;
+
+typedef struct {
+	MessageHeader header;
 } __attribute__((__packed__)) StandardMessage;
 
 void get_value(const ComType com, const GetValue *data);
@@ -152,6 +188,9 @@ void get_interrupt(const ComType com, const GetInterrupt *data);
 void set_monoflop(const ComType com, const SetMonoflop *data);
 void get_monoflop(const ComType com, const GetMonoflop *data);
 void set_selected_values(const ComType com, const SetSelectedValues *data);
+void get_edge_count(const ComType com, const GetEdgeCount *data);
+void set_edge_count_config(const ComType com, const SetEdgeCountConfig *data);
+void get_edge_count_config(const ComType com, const GetEdgeCountConfig *data);
 
 void invocation(const ComType com, const uint8_t *data);
 void constructor(void);
