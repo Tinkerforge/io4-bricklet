@@ -6,9 +6,9 @@ require_once('Tinkerforge/BrickletIO4.php');
 use Tinkerforge\IPConnection;
 use Tinkerforge\BrickletIO4;
 
-$host = 'localhost';
-$port = 4223;
-$uid = '6hY'; // Change to your UID
+const HOST = 'localhost';
+const PORT = 4223;
+const UID = '6hY'; // Change to your UID
 
 // Callback function for interrupts
 function cb_interrupt($interruptMask, $valueMask)
@@ -18,9 +18,9 @@ function cb_interrupt($interruptMask, $valueMask)
 }
 
 $ipcon = new IPConnection(); // Create IP connection
-$io4 = new BrickletIO4($uid, $ipcon); // Create device object
+$io4 = new BrickletIO4(UID, $ipcon); // Create device object
 
-$ipcon->connect($host, $port); // Connect to brickd
+$ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
 // Register callback for interrupts
