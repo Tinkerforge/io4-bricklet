@@ -2,8 +2,8 @@ import com.tinkerforge.BrickletIO4;
 import com.tinkerforge.IPConnection;
 
 public class ExampleInterrupt {
-	private static final String host = "localhost";
-	private static final int port = 4223;
+	private static final String HOST = "localhost";
+	private static final int PORT = 4223;
 	private static final String UID = "ABC"; // Change to your UID
 	
 	// Note: To make the example code cleaner we do not handle exceptions. Exceptions you
@@ -12,7 +12,7 @@ public class ExampleInterrupt {
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickletIO4 io4 = new BrickletIO4(UID, ipcon); // Create device object
 
-		ipcon.connect(host, port); // Connect to brickd
+		ipcon.connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
 		// Add and implement listener for interrupt (called if pin 0 changes)
