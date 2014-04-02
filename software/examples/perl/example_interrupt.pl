@@ -15,8 +15,8 @@ sub cb_interrupt
 {
     my ($interrupt_mask, $value_mask) = @_;
 
-    print "\nInterrupt by: ".sprintf('%b', $interrupt_mask);
-    print "\nValue: ".sprintf('%b', $value_mask)."\n";
+    print "Interrupt by: ".sprintf('%b', $interrupt_mask)."\n";
+    print "Value: ".sprintf('%b', $value_mask)."\n";
 }
 
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
@@ -28,7 +28,7 @@ $io->register_callback($io->CALLBACK_INTERRUPT, 'cb_interrupt');
 # Enable interrupt on pin 0
 $io->set_interrupt(1 << 0);
 
-print "\nPress any key to exit...\n";
+print "Press any key to exit...\n";
 <STDIN>;
 $ipcon->disconnect();
 
