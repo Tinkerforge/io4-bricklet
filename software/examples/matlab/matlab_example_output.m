@@ -18,7 +18,7 @@ function matlab_example_output
     % Set pin 2 and 3 to output high
     io.setConfiguration(bitor(bitshift(1, 2), bitshift(1, 3)), 'o', true);
 
-    input('\nPress any key to exit...\n', 's');
+    input('Press any key to exit...\n', 's');
     ipcon.disconnect();
 end
 
