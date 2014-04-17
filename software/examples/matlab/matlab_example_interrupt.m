@@ -1,4 +1,4 @@
-function matlab_example_interrupt
+function matlab_example_interrupt()
     import com.tinkerforge.IPConnection;
     import com.tinkerforge.BrickletIO4;
 
