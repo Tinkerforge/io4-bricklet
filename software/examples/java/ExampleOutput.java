@@ -21,7 +21,7 @@ public class ExampleOutput {
 		// Set pin 2 and 3 to output high
 		io4.setConfiguration((short)((1 << 2) | (1 << 3)), 'o', true);
 
-		System.console().readLine("Press key to exit\n");
+		System.out.println("Press key to exit"); System.in.read();
 		ipcon.disconnect();
 	}
 }
