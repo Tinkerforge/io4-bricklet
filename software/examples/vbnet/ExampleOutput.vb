@@ -19,7 +19,7 @@ Module ExampleSimple
         io4.SetConfiguration((1 << 2) or (1 << 3), "o"C, true)
 
         System.Console.WriteLine("Press key to exit")
-        System.Console.ReadKey()
+        System.Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module
