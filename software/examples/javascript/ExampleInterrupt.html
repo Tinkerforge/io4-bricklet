@@ -50,8 +50,7 @@
                     // Callback function for interrupts
                     function(interruptMask, valueMask) {
                         textArea.value += 'Interrupt by: ' + parseInt(interruptMask).toString(2)+'\n';
-                        textArea.value += 'Value: ' + parseInt(valueMask).toString(2);
-                        textArea.value += '\n';
+                        textArea.value += 'Value: ' + parseInt(valueMask).toString(2)+'\n';
                         textArea.scrollTop = textArea.scrollHeight;
                     }
                 );
