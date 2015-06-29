@@ -1,6 +1,6 @@
 function octave_example_output()
     more off;
-    
+
     HOST = "localhost";
     PORT = 4223;
     UID = "abc"; % Change to your UID
