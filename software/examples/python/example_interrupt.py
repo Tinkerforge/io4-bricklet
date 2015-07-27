@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-  
+# -*- coding: utf-8 -*-
 
 HOST = "localhost"
 PORT = 4223
@@ -15,16 +15,16 @@ def cb_interrupt(interrupt_mask, value_mask):
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
-    io = IO4(UID, ipcon) # Create device object
+    io4 = IO4(UID, ipcon) # Create device object
 
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
 
     # Register callback for interrupts
-    io.register_callback(io.CALLBACK_INTERRUPT, cb_interrupt)
+    io4.register_callback(io.CALLBACK_INTERRUPT, cb_interrupt)
 
     # Enable interrupt on pin 0
-    io.set_interrupt(1 << 0)
+    io4.set_interrupt(1 << 0)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.disconnect()

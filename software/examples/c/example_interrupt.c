@@ -21,8 +21,8 @@ int main() {
 	ipcon_create(&ipcon);
 
 	// Create device object
-	IO4 io;
-	io4_create(&io, UID, &ipcon); 
+	IO4 io4;
+	io4_create(&io4, UID, &ipcon);
 
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
@@ -32,13 +32,13 @@ int main() {
 	// Don't use device before ipcon is connected
 
 	// Register callback for interrupts
-	io4_register_callback(&io, 
-	                      IO4_CALLBACK_INTERRUPT, 
+	io4_register_callback(&io4,
+	                      IO4_CALLBACK_INTERRUPT,
 	                      (void *)cb_interrupt,
 	                      NULL);
 
 	// Enable interrupt on pin 0
-	io4_set_interrupt(&io, 1 << 0);
+	io4_set_interrupt(&io4, 1 << 0);
 
 	printf("Press key to exit\n");
 	getchar();

@@ -8,14 +8,13 @@ include Tinkerforge
 
 HOST = 'localhost'
 PORT = 4223
-UID = '6hY' # Change to your UID
+UID = 'XYZ' # Change to your UID
 
 ipcon = IPConnection.new # Create IP connection
 io4 = BrickletIO4.new UID, ipcon # Create device object
 
 ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
-
 
 # Set pin 1 to output low
 io4.set_configuration 1 << 1, 'o', false

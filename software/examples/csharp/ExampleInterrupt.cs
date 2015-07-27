@@ -4,7 +4,7 @@ class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "ABC"; // Change to your UID
+	private static string UID = "XYZ"; // Change to your UID
 
 	// Callback function for interrupts
 	static void InterruptCB(BrickletIO4 sender, byte interruptMask, byte valueMask)
@@ -16,7 +16,7 @@ class Example
 		System.Console.WriteLine("Value: " + valueBinary);
 	}
 
-	static void Main() 
+	static void Main()
 	{
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickletIO4 io4 = new BrickletIO4(UID, ipcon); // Create device object
