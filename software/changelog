@@ -1,6 +1,17 @@
-1.0.0: Initial version
-1.1.0: Add support for tick types
-1.1.1: Add monoflop functionality
-1.1.2: Change code to avoid GCC version > 4.5 creating a faulty firmware
-2.0.0: Support for protocol 2.0
-2.0.1: Add edge counters for all pins
+1.0.0:
+- Initial version
+
+1.1.0:
+- Add support for tick types
+
+1.1.1:
+- Add monoflop functionality
+
+1.1.2:
+- Change code to avoid GCC version > 4.5 creating a faulty firmware
+
+2.0.0:
+- Support for Protocol 2.0
+
+2.0.1:
+- Add edge counters for all pins
