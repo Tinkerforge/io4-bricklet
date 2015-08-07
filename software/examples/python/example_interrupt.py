@@ -6,7 +6,7 @@ PORT = 4223
 UID = "XYZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
-from tinkerforge.bricklet_io4 import IO4
+from tinkerforge.bricklet_io4 import BrickletIO4
 
 # Callback function for interrupts
 def cb_interrupt(interrupt_mask, value_mask):
@@ -15,7 +15,7 @@ def cb_interrupt(interrupt_mask, value_mask):
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
-    io4 = IO4(UID, ipcon) # Create device object
+    io4 = BrickletIO4(UID, ipcon) # Create device object
 
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
