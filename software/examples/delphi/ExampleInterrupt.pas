@@ -10,7 +10,7 @@ type
   TExample = class
   private
     ipcon: TIPConnection;
-    io: TBrickletIO4;
+    io4: TBrickletIO4;
   public
     procedure InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
     procedure Execute;
@@ -19,7 +19,7 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = '6hY'; { Change to your UID }
+  UID = 'XYZ'; { Change to your UID }
 
 var
   e: TExample;
@@ -37,17 +37,17 @@ begin
   ipcon := TIPConnection.Create;
 
   { Create device object }
-  io := TBrickletIO4.Create(UID, ipcon);
+  io4 := TBrickletIO4.Create(UID, ipcon);
 
   { Connect to brickd }
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
   { Register callback for interrupts }
-  io.OnInterrupt := {$ifdef FPC}@{$endif}InterruptCB;
+  io4.OnInterrupt := {$ifdef FPC}@{$endif}InterruptCB;
 
   { Enable interrupt on pin 0 }
-  io.SetInterrupt(1 shl 0);
+  io4.SetInterrupt(1 shl 0);
 
   WriteLn('Press key to exit');
   ReadLn;

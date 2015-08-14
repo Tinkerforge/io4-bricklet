@@ -10,7 +10,7 @@ type
   TExample = class
   private
     ipcon: TIPConnection;
-    io: TBrickletIO4;
+    io4: TBrickletIO4;
   public
     procedure Execute;
   end;
@@ -18,7 +18,7 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = '6hY'; { Change to your UID }
+  UID = 'XYZ'; { Change to your UID }
 
 var
   e: TExample;
@@ -29,17 +29,17 @@ begin
   ipcon := TIPConnection.Create;
 
   { Create device object }
-  io := TBrickletIO4.Create(UID, ipcon);
+  io4 := TBrickletIO4.Create(UID, ipcon);
 
   { Connect to brickd }
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
   { Set pin 1 to output low }
-  io.SetConfiguration(1 shl 1, 'o', false);
+  io4.SetConfiguration(1 shl 1, 'o', false);
 
   { Set pin 2 and 3 to output high }
-  io.SetConfiguration((1 shl 2) or (1 shl 3), 'o', true);
+  io4.SetConfiguration((1 shl 2) or (1 shl 3), 'o', true);
 
   WriteLn('Press key to exit');
   ReadLn;
