@@ -1,9 +1,9 @@
 Imports Tinkerforge
 
-Module ExampleSimple
+Module ExampleOutput
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "adL" ' Change to your UID
+    Const UID As String = "XYZ" ' Change to your UID
 
     Sub Main()
         Dim ipcon As New IPConnection() ' Create IP connection
