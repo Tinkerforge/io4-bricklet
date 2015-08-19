@@ -1,14 +1,14 @@
-#!/usr/bin/perl  
+#!/usr/bin/perl
 
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickletIO4;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'h15'; # Change to your UID
+use constant UID => 'XYZ'; # Change to your UID
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
-my $io = Tinkerforge::BrickletIO4->new(&UID, $ipcon); # Create device object
+my $io4 = Tinkerforge::BrickletIO4->new(&UID, $ipcon); # Create device object
 
 # Callback function for interrupts
 sub cb_interrupt
@@ -23,12 +23,11 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Don't use device before ipcon is connected
 
 # Register callback for interrupts
-$io->register_callback($io->CALLBACK_INTERRUPT, 'cb_interrupt');
+$io4->register_callback($io4->CALLBACK_INTERRUPT, 'cb_interrupt');
 
 # Enable interrupt on pin 0
-$io->set_interrupt(1 << 0);
+$io4->set_interrupt(1 << 0);
 
 print "Press any key to exit...\n";
 <STDIN>;
 $ipcon->disconnect();
-
