@@ -4,8 +4,8 @@ function matlab_example_output()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = 'abc'; % Change to your UID
-    
+    UID = 'XYZ'; % Change to your UID
+
     ipcon = IPConnection(); % Create IP connection
     io = BrickletIO4(UID, ipcon); % Create device object
 
@@ -18,6 +18,6 @@ function matlab_example_output()
     % Set pin 2 and 3 to output high
     io.setConfiguration(bitor(bitshift(1, 2), bitshift(1, 3)), 'o', true);
 
-    input('Press any key to exit...\n', 's');
+    input('Press key to exit\n', 's');
     ipcon.disconnect();
 end

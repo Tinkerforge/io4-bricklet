@@ -13,8 +13,8 @@ int main(void) {
 	ipcon_create(&ipcon);
 
 	// Create device object
-	IO4 io4;
-	io4_create(&io4, UID, &ipcon);
+	IO4 io;
+	io4_create(&io, UID, &ipcon);
 
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
@@ -24,10 +24,10 @@ int main(void) {
 	// Don't use device before ipcon is connected
 
 	// Set pin 1 to output low
-	io4_set_configuration(&io4, 1 << 1, 'o', false);
+	io4_set_configuration(&io, 1 << 1, 'o', false);
 
 	// Set pin 2 and 3 to output high
-	io4_set_configuration(&io4, (1 << 2) | (1 << 3), 'o', true);
+	io4_set_configuration(&io, (1 << 2) | (1 << 3), 'o', true);
 
 	printf("Press key to exit\n");
 	getchar();

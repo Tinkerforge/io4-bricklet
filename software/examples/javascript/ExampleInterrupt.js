@@ -2,38 +2,38 @@ var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = 'gVq'; // Change to your UID
+var UID = 'XYZ'; // Change to your UID
 
 var ipcon = new Tinkerforge.IPConnection(); // Create IP connection
 var io = new Tinkerforge.BrickletIO4(UID, ipcon); // Create device object
 
 ipcon.connect(HOST, PORT,
-    function(error) {
-        console.log('Error: '+error);
+    function (error) {
+        console.log('Error: ' + error);
     }
 ); // Connect to brickd
 // Don't use device before ipcon is connected
 
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-    function(connectReason) {
+    function (connectReason) {
         // Enable interrupt on pin 0
         io.setInterrupt(1 << 0);
     }
 );
 
-// Register callback for interrupts
+// Register interrupt callback
 io.on(Tinkerforge.BrickletIO4.CALLBACK_INTERRUPT,
-    // Callback function for interrupts
-    function(interruptMask, valueMask) {
-        console.log('Interrupt by: ' + parseInt(interruptMask).toString(2));
-        console.log('Value: ' + parseInt(valueMask).toString(2));
+    // Callback function for interrupt callback
+    function (interruptMask, valueMask) {
+        console.log('Interrupt Mask: ' + interruptMask.toString(2));
+        console.log('Value Mask: ' + valueMask.toString(2));
         console.log();
     }
 );
 
-console.log("Press any key to exit ...");
+console.log('Press key to exit');
 process.stdin.on('data',
-    function(data) {
+    function (data) {
         ipcon.disconnect();
         process.exit(0);
     }

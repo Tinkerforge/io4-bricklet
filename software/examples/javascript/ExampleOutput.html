@@ -34,15 +34,16 @@
                 var io = new Tinkerforge.BrickletIO4(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
                 ); // Connect to brickd
                 // Don't use device before ipcon is connected
 
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
+                    function (connectReason) {
                         // Set pin 1 to output low
                         io.setConfiguration(1 << 1, 'o', false);
+
                         // Set pin 2 and 3 to output high
                         io.setConfiguration((1 << 2) | (1 << 3), 'o', true);
                     }

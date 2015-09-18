@@ -1,11 +1,10 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=XYZ
+uid=XYZ # Change to your UID
 
-# enable interrupt on pin 0: (1 << 0) = 1
+# Enable interrupt on pin 0: 1 << 0 = 1
 tinkerforge call io4-bricklet $uid set-interrupt 1
 
-# handle incoming interrupt callbacks
+# Handle incoming interrupt callbacks
 tinkerforge dispatch io4-bricklet $uid interrupt

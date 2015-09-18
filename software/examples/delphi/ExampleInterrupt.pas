@@ -10,7 +10,7 @@ type
   TExample = class
   private
     ipcon: TIPConnection;
-    io4: TBrickletIO4;
+    io: TBrickletIO4;
   public
     procedure InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
     procedure Execute;
@@ -24,11 +24,12 @@ const
 var
   e: TExample;
 
-{ Callback function for interrupts }
+{ Callback procedure for interrupt callback }
 procedure TExample.InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
 begin
-  WriteLn(Format('Interrupt by: %d', [interruptMask]));
-  WriteLn(Format('Value: %d', [valueMask]));
+  WriteLn(Format('Interrupt Mask: %d', [interruptMask]));
+  WriteLn(Format('Value Mask: %d', [valueMask]));
+  WriteLn('');
 end;
 
 procedure TExample.Execute;
@@ -37,17 +38,17 @@ begin
   ipcon := TIPConnection.Create;
 
   { Create device object }
-  io4 := TBrickletIO4.Create(UID, ipcon);
+  io := TBrickletIO4.Create(UID, ipcon);
 
   { Connect to brickd }
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Register callback for interrupts }
-  io4.OnInterrupt := {$ifdef FPC}@{$endif}InterruptCB;
+  { Register interrupt callback to procedure InterruptCB }
+  io.OnInterrupt := {$ifdef FPC}@{$endif}InterruptCB;
 
   { Enable interrupt on pin 0 }
-  io4.SetInterrupt(1 shl 0);
+  io.SetInterrupt(1 shl 0);
 
   WriteLn('Press key to exit');
   ReadLn;

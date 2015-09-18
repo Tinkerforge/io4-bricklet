@@ -1,3 +1,4 @@
+Imports System
 Imports Tinkerforge
 
 Module ExampleInterrupt
@@ -5,31 +6,28 @@ Module ExampleInterrupt
     Const PORT As Integer = 4223
     Const UID As String = "XYZ" ' Change to your UID
 
-    ' Callback function for interrupts
-    Sub InterruptCB(ByVal sender As BrickletIO4, _
-                    ByVal interruptMask As Byte, ByVal valueMask As Byte)
-        Dim interruptBinary As String = System.Convert.ToString(interruptMask, 2)
-        Dim valueBinary As String = System.Convert.ToString(valueMask, 2)
-
-        System.Console.WriteLine("Interrupt by: " + interruptBinary)
-        System.Console.WriteLine("Value: " + valueBinary)
+    ' Callback subroutine for interrupt callback
+    Sub InterruptCB(ByVal sender As BrickletIO4, ByVal interruptMask As Byte, ByVal valueMask As Byte)
+        Console.WriteLine("Interrupt Mask: " + Convert.ToString(interruptMask, 2))
+        Console.WriteLine("Value Mask: " + Convert.ToString(valueMask, 2))
+        Console.WriteLine("")
     End Sub
 
     Sub Main()
         Dim ipcon As New IPConnection() ' Create IP connection
-        Dim io4 As New BrickletIO4(UID, ipcon) ' Create device object
+        Dim io As New BrickletIO4(UID, ipcon) ' Create device object
 
         ipcon.Connect(HOST, PORT) ' Connect to brickd
         ' Don't use device before ipcon is connected
 
-        ' Register callback for interrupts
-        AddHandler io4.Interrupt, AddressOf InterruptCB
+        ' Register interrupt callback to subroutine InterruptCB
+        AddHandler io.Interrupt, AddressOf InterruptCB
 
         ' Enable interrupt on pin 0
-        io4.SetInterrupt(1 << 0)
+        io.SetInterrupt(1 << 0)
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

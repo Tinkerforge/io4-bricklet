@@ -8,26 +8,27 @@ use Tinkerforge\BrickletIO4;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = '6hY'; // Change to your UID
+const UID = 'XYZ'; // Change to your UID
 
-// Callback function for interrupts
-function cb_interrupt($interruptMask, $valueMask)
+// Callback function for interrupt callback
+function cb_interrupt($interrupt_mask, $value_mask)
 {
-    echo "Interrupt by: " . decbin($interruptMask) . "\n";
-    echo "Value: " . decbin($valueMask) . "\n";
+    echo "Interrupt Mask: " . sprintf("%04b", $interrupt_mask) . "\n";
+    echo "Value Mask: " . sprintf("%04b", $value_mask) . "\n";
+    echo "\n";
 }
 
 $ipcon = new IPConnection(); // Create IP connection
-$io4 = new BrickletIO4(UID, $ipcon); // Create device object
+$io = new BrickletIO4(UID, $ipcon); // Create device object
 
 $ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
-// Register callback for interrupts
-$io4->registerCallback(BrickletIO4::CALLBACK_INTERRUPT, 'cb_interrupt');
+// Register interrupt callback to function cb_interrupt
+$io->registerCallback(BrickletIO4::CALLBACK_INTERRUPT, 'cb_interrupt');
 
 // Enable interrupt on pin 0
-$io4->setInterrupt(1 << 0);
+$io->setInterrupt(1 << 0);
 
 echo "Press ctrl+c to exit\n";
 $ipcon->dispatchCallbacks(-1); // Dispatch callbacks forever

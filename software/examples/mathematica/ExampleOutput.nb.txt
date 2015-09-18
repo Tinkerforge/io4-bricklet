@@ -3,20 +3,20 @@ LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
 
 host="localhost"
 port=4223
-uid="cno"(* Change to your UID *)
+uid="XYZ"(*Change to your UID*)
 
-(* Create IPConnection and device object *)
+(*Create IPConnection and device object*)
 ipcon=NETNew["Tinkerforge.IPConnection"]
-io4=NETNew["Tinkerforge.BrickletIO4",uid,ipcon]
+io=NETNew["Tinkerforge.BrickletIO4",uid,ipcon]
 ipcon@Connect[host,port]
 
-(* Set pin 1 to output low *)
-io4@SetConfiguration[FromDigits[{0,0,1,0},2],BrickletIO4`DIRECTIONUOUT,False]
+(*Set pin 1 to output low*)
+io@SetConfiguration[FromDigits[{0,0,1,0},2],ToCharacterCode["o"][[1]],False]
 
-(* Set pin 2 and 3 to output high *)
-io4@SetConfiguration[FromDigits[{1,1,0,0},2],BrickletIO4`DIRECTIONUOUT,True]
+(*Set pin 2 and 3 to output high*)
+io@SetConfiguration[FromDigits[{1,1,0,0},2],ToCharacterCode["o"][[1]],True]
 
-(* Clean up *)
+(*Clean up*)
 ipcon@Disconnect[]
-ReleaseNETObject[io4]
+ReleaseNETObject[io]
 ReleaseNETObject[ipcon]
