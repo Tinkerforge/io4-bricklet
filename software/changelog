@@ -1,17 +1,17 @@
-1.0.0:
+2011-10-06: 1.0.0 (65bd935)
 - Initial version
 
-1.1.0:
+2012-02-15: 1.1.0 (8a25257)
 - Add support for tick types
 
-1.1.1:
+2012-08-01: 1.1.1 (419f11c)
 - Add monoflop functionality
 
-1.1.2:
+2012-10-25: 1.1.2 (a7facb5)
 - Change code to avoid GCC version > 4.5 creating a faulty firmware
 
-2.0.0:
+2013-01-17: 2.0.0 (e45b424)
 - Support for Protocol 2.0
 
-2.0.1:
+2013-08-28: 2.0.1 (3a25001)
 - Add edge counters for all pins
