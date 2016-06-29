@@ -25,7 +25,8 @@ var
   e: TExample;
 
 { Callback procedure for interrupt callback }
-procedure TExample.InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
+procedure TExample.InterruptCB(sender: TBrickletIO4; const interruptMask: byte;
+                               const valueMask: byte);
 begin
   WriteLn(Format('Interrupt Mask: %d', [interruptMask]));
   WriteLn(Format('Value Mask: %d', [valueMask]));

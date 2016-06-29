@@ -7,8 +7,8 @@ Module ExampleInterrupt
     Const UID As String = "XYZ" ' Change to your UID
 
     ' Callback subroutine for interrupt callback
-    Sub InterruptCB(ByVal sender As BrickletIO4, _
-                    ByVal interruptMask As Byte, ByVal valueMask As Byte)
+    Sub InterruptCB(ByVal sender As BrickletIO4, ByVal interruptMask As Byte, _
+                    ByVal valueMask As Byte)
         Console.WriteLine("Interrupt Mask: " + Convert.ToString(interruptMask, 2))
         Console.WriteLine("Value Mask: " + Convert.ToString(valueMask, 2))
         Console.WriteLine("")
