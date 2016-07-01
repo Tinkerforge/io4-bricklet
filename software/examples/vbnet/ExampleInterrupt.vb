@@ -4,7 +4,7 @@ Imports Tinkerforge
 Module ExampleInterrupt
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "XYZ" ' Change to your UID
+    Const UID As String = "XYZ" ' Change XYZ to the UID of your IO-4 Bricklet
 
     ' Callback subroutine for interrupt callback
     Sub InterruptCB(ByVal sender As BrickletIO4, ByVal interruptMask As Byte, _

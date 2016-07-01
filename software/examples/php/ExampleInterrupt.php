@@ -8,7 +8,7 @@ use Tinkerforge\BrickletIO4;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'XYZ'; // Change to your UID
+const UID = 'XYZ'; // Change XYZ to the UID of your IO-4 Bricklet
 
 // Callback function for interrupt callback
 function cb_interrupt($interrupt_mask, $value_mask)

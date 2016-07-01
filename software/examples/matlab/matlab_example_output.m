@@ -4,7 +4,7 @@ function matlab_example_output()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = 'XYZ'; % Change to your UID
+    UID = 'XYZ'; % Change XYZ to the UID of your IO-4 Bricklet
 
     ipcon = IPConnection(); % Create IP connection
     io = handle(BrickletIO4(UID, ipcon), 'CallbackProperties'); % Create device object

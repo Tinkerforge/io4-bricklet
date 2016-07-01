@@ -12,14 +12,15 @@ type
     ipcon: TIPConnection;
     io: TBrickletIO4;
   public
-    procedure InterruptCB(sender: TBrickletIO4; const interruptMask: byte; const valueMask: byte);
+    procedure InterruptCB(sender: TBrickletIO4; const interruptMask: byte;
+                          const valueMask: byte);
     procedure Execute;
   end;
 
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
+  UID = 'XYZ'; { Change XYZ to the UID of your IO-4 Bricklet }
 
 var
   e: TExample;
