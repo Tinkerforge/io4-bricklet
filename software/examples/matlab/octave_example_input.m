@@ -5,8 +5,8 @@ function octave_example_input()
     PORT = 4223;
     UID = "XYZ"; % Change XYZ to the UID of your IO-4 Bricklet
 
-    ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
-    io = java_new("com.tinkerforge.BrickletIO4", UID, ipcon); % Create device object
+    ipcon = javaObject("com.tinkerforge.IPConnection"); % Create IP connection
+    io = javaObject("com.tinkerforge.BrickletIO4", UID, ipcon); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
