@@ -22,7 +22,7 @@ Module ExampleInterrupt
         ' Don't use device before ipcon is connected
 
         ' Register interrupt callback to subroutine InterruptCB
-        AddHandler io.Interrupt, AddressOf InterruptCB
+        AddHandler io.InterruptCallback, AddressOf InterruptCB
 
         ' Enable interrupt on pin 0
         io.SetInterrupt(1 << 0)

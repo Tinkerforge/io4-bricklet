@@ -17,7 +17,7 @@ InterruptCB[sender_,interruptMask_,valueMask_]:=
   Print["Value Mask: "<>StringJoin[Map[ToString,IntegerDigits[valueMask,2,4]]]]
  ]
 
-AddEventHandler[io@Interrupt,InterruptCB]
+AddEventHandler[io@InterruptCallback,InterruptCB]
 
 (*Enable interrupt on pin 0*)
 io@SetInterrupt[FromDigits[{0,0,0,1},2]]
