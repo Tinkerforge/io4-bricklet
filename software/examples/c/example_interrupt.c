@@ -11,8 +11,8 @@
 void cb_interrupt(uint8_t interrupt_mask, uint8_t value_mask, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("Interrupt Mask: %d\n", interrupt_mask);
-	printf("Value Mask: %d\n", value_mask);
+	printf("Interrupt Mask: %u\n", interrupt_mask);
+	printf("Value Mask: %u\n", value_mask);
 	printf("\n");
 }
 

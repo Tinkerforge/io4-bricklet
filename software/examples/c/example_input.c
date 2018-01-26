@@ -30,7 +30,7 @@ int main(void) {
 		return 1;
 	}
 
-	printf("Value Mask: %d\n", value_mask);
+	printf("Value Mask: %u\n", value_mask);
 
 	printf("Press key to exit\n");
 	getchar();
