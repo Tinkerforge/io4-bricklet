@@ -1,6 +1,8 @@
-use std::{error::Error, io};
+use std::{io, error::Error};
 
-use tinkerforge::{io4_bricklet::*, ip_connection::IpConnection};
+use tinkerforge::{ip_connection::IpConnection, 
+                  io4_bricklet::*};
+
 
 const HOST: &str = "localhost";
 const PORT: u16 = 4223;
@@ -11,11 +13,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let io = Io4Bricklet::new(UID, &ipcon); // Create device object.
 
     ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd.
-                                          // Don't use device before ipcon is connected.
+    // Don't use device before ipcon is connected.
 
-    // Get current value as bitmask.
-    let value_mask = io.get_value().recv()?;
-    println!("Value Mask: {:b}", value_mask);
+		// Get current value as bitmask.
+let value_mask = io.get_value().recv()?;
+		println!("Value Mask: {:b}", value_mask);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
