@@ -1,0 +1,8 @@
+
+
+# Change XYZ to the UID of your IO-4 Bricklet
+
+setup:
+	# Get current value as bitmask
+	subscribe to tinkerforge/response/io4/XYZ/get_value
+	publish '' to tinkerforge/request/io4_bricklet/XYZ/get_value 
