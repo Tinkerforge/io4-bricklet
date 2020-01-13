@@ -3,6 +3,6 @@
 setup:
 	# Set pin 1 to output low: 1 << 1 = 2
 	publish '{"selection_mask": 2, "direction": "out", "value": false}' to tinkerforge/request/io4_bricklet/XYZ/set_configuration 
-	
+
 	# Set pin 2 and 3 to output high: (1 << 2) | (1 << 3) = 12
 	publish '{"selection_mask": 12, "direction": "out", "value": true}' to tinkerforge/request/io4_bricklet/XYZ/set_configuration 
