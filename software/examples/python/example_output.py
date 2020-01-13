@@ -21,5 +21,5 @@ if __name__ == "__main__":
     # Set pin 2 and 3 to output high
     io.set_configuration((1 << 2) | (1 << 3), "o", True)
 
-    raw_input("Press key to exit\n") # Use input() in Python 3
+    input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()

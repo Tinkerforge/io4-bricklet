@@ -27,5 +27,5 @@ if __name__ == "__main__":
     # Enable interrupt on pin 0
     io.set_interrupt(1 << 0)
 
-    raw_input("Press key to exit\n") # Use input() in Python 3
+    input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()
