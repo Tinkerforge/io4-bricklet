@@ -6,4 +6,4 @@ setup:
 	publish '{"register": true}' to tinkerforge/register/io4_bricklet/XYZ/interrupt # Register interrupt callback
 
 	# Enable interrupt on pin 0: 1 << 0 = 1
-	publish '{"interrupt_mask": 1}' to tinkerforge/request/io4_bricklet/XYZ/set_interrupt 
+	publish '{"interrupt_mask": 1}' to tinkerforge/request/io4_bricklet/XYZ/set_interrupt
